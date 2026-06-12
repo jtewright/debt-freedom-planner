@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debt Freedom Planner — free UK debt payoff calculator</title>
+<meta name="description" content="Stop guessing. List your debts and see exactly when you'll be debt-free, the cheapest payoff order, and what to pay each month. Free, no signup, no bank connection — everything stays on your device.">
+<meta property="og:title" content="Debt Freedom Planner — see your debt-free date">
+<meta property="og:description" content="Free UK debt payoff calculator. No signup, no bank connection. See the cheapest payoff order and exactly what to pay each month.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,400;1,9..144,560&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap row-between">
+    <span class="wordmark">Debt&nbsp;Freedom&nbsp;Planner</span>
+    <span class="badge">Free UK tool</span>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Stop guessing. See exactly when you&rsquo;ll be debt&#8209;free and how to get there faster — free.</h1>
+      <p class="lede">List your debts and what you can pay each month. You&rsquo;ll get the cheapest payoff order, your debt&#8209;free date, and exactly what to pay on each debt — worked out entirely in your browser.</p>
+      <p><a class="btn btn-primary" href="#planner">Work out my plan</a></p>
+
+      <ul class="trust-strip" aria-label="How this tool works">
+        <li>Free — no catches</li>
+        <li>No signup</li>
+        <li>No bank connection</li>
+        <li>Your numbers never leave this device</li>
+      </ul>
+      <details class="why-free">
+        <summary>Why is this free?</summary>
+        <p>This is an independent tool. There are no ads, no affiliate links, and no data collection — your numbers stay in your browser and are never sent anywhere. A simple page like this costs almost nothing to run, so it doesn&rsquo;t need to make money from you.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ PLANNER ============ -->
+  <section class="panel" id="planner">
+    <div class="wrap">
+      <h2><span class="step">1</span> Your debts</h2>
+      <p class="hint">Credit cards, overdrafts, loans, car finance, BNPL, store cards — everything except your mortgage. Find the APR and minimum payment on your latest statement; a close guess is fine to start.</p>
+
+      <div id="debt-rows" class="debt-rows"></div>
+
+      <div class="row-actions">
+        <button type="button" class="btn btn-ghost" id="add-debt">+ Add another debt</button>
+        <button type="button" class="btn btn-ghost" id="load-example">Show me an example</button>
+      </div>
+
+      <h2><span class="step">2</span> What you can pay monthly</h2>
+      <div class="budget-row">
+        <label for="budget">Total towards debts each month
+          <span class="hint" id="min-hint"></span>
+        </label>
+        <div class="money-input"><span>£</span><input id="budget" inputmode="decimal" placeholder="0.00" autocomplete="off"></div>
+      </div>
+
+      <div id="form-errors" class="callout callout-error" hidden></div>
+
+      <p><button type="button" class="btn btn-primary btn-big" id="calculate">Show my plan</button></p>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="results" id="results" hidden aria-live="polite">
+    <div class="wrap">
+      <p class="results-eyebrow">Your plan</p>
+      <p class="freedom-line">You could be debt&#8209;free in</p>
+      <p class="freedom-date" id="freedom-date">—</p>
+      <p class="freedom-compare" id="freedom-compare"></p>
+
+      <div id="result-warnings"></div>
+
+      <div class="strategy" role="radiogroup" aria-label="Payoff strategy">
+        <button type="button" class="strategy-opt" id="opt-avalanche" aria-pressed="true">
+          <strong>Cheapest first</strong>
+          <span>Highest interest rate paid off first — saves the most money</span>
+          <em id="avalanche-stats"></em>
+        </button>
+        <button type="button" class="strategy-opt" id="opt-snowball" aria-pressed="false">
+          <strong>Smallest first</strong>
+          <span>Smallest balance paid off first — quick wins for motivation</span>
+          <em id="snowball-stats"></em>
+        </button>
+      </div>
+      <p class="hint" id="strategy-note"></p>
+
+      <h3>What to pay this month</h3>
+      <div id="this-month" class="pay-list"></div>
+
+      <h3>Your payoff order</h3>
+      <ol id="payoff-order" class="order-list"></ol>
+
+      <details class="schedule">
+        <summary>See the full month-by-month plan</summary>
+        <div class="table-scroll"><table id="schedule-table"></table></div>
+      </details>
+
+      <div class="share-card">
+        <p><strong>Know someone who&rsquo;d find this useful?</strong> Most people hear about tools like this from someone they trust.</p>
+        <div class="row-actions">
+          <button type="button" class="btn btn-primary" id="share-btn">Share this tool</button>
+          <a class="btn btn-ghost" id="share-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+          <button type="button" class="btn btn-ghost" id="share-copy">Copy link</button>
+        </div>
+        <p class="hint">Sharing sends only the link — never your numbers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REAL HELP ============ -->
+  <section class="help-strip">
+    <div class="wrap">
+      <h3>Struggling with debt? Get free, real help.</h3>
+      <p>If your debts feel unmanageable — you&rsquo;re missing payments or juggling credit to pay credit — speak to a free, government-backed or charity debt adviser. They can do things this calculator can&rsquo;t, like negotiating with lenders.</p>
+      <ul class="help-links">
+        <li><a href="https://www.stepchange.org" target="_blank" rel="noopener">StepChange Debt Charity</a></li>
+        <li><a href="https://nationaldebtline.org" target="_blank" rel="noopener">National Debtline</a></li>
+        <li><a href="https://www.moneyhelper.org.uk" target="_blank" rel="noopener">MoneyHelper (government-backed)</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p><strong>This is a calculator, not advice.</strong> Debt Freedom Planner is a free information tool. It does not provide financial or debt advice and is not regulated by the Financial Conduct Authority. Figures are estimates based on the numbers you enter and fixed interest rates; your lender&rsquo;s actual charges may differ. Always check your statements, and consider free regulated advice from the organisations above before making decisions.</p>
+    <p>Privacy: your numbers are saved only in your own browser (so the page remembers them) and are never transmitted. There are no analytics trackers, no cookies, no server.</p>
+  </div>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+<noscript><p class="wrap">This calculator needs JavaScript to run — everything is computed on your device.</p></noscript>
+</body>
+</html>
